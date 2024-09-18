@@ -19,7 +19,7 @@
     </header>
     <main>
         <?php
-        echo "<p>Welcome to the Music Streaming Service!</p>";
+        echo "<p>Welcome to theeee Music Streaming Service!</p>";
         ?>
     </main>
     <script src="scripts.js"></script>
