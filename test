@@ -1,0 +1,20 @@
+script>
+        // Check for query parameter on page load
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const section = urlParams.get('section');
+            const status = urlParams.get('status');
+
+            // Display the correct section based on URL parameter
+            if (section) {
+                displayContent(section);
+            }
+
+            // Show a status message if available
+            if (status === 'success') {
+                document.getElementById('status-message').innerHTML = "<span style='color: green;'>Song added successfully!</span>";
+            } else if (status === 'error') {
+                document.getElementById('status-message').innerHTML = "<span style='color: red;'>Error adding song.</span>";
+            }
+        }
+    </script>

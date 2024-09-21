@@ -1,13 +1,6 @@
 <?php
 session_start();
 
-if (isset($_SESSION['user_id'])) {
-    echo "User ID: " . $_SESSION['user_id'];
-} else {
-    echo "User ID is not set in the session.";
-}
-
-
 $servername = "localhost";
 $username = "root";  
 $password = "";      
@@ -65,9 +58,10 @@ function fetchSongs($conn) {
     <script>
         function displayContent(section) {
             const contentDiv = document.getElementById('content-display');
+            const username = "<?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest'; ?>";
 
             if (section === 'Home') {
-                contentDiv.innerHTML = '<h1>Home Page</h1>';
+                contentDiv.innerHTML = `<h1>Welcome ${username}!</h1>`;
             } else if (section === 'Search') {
                 contentDiv.innerHTML = '<h1>Search</h1>';
             } else if (section === 'Playlist') {
@@ -91,7 +85,13 @@ function fetchSongs($conn) {
                     <p id="status-message"></p>`;
             }
         }
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const section = urlParams.get('section');
+            displayContent('Home');
+        }
     </script>
+    
 </head>
 <body>
     <div class="navbar">
@@ -106,27 +106,5 @@ function fetchSongs($conn) {
         <h1>Welcome</h1>
         <p>Please select a section from the menu.</p>
     </div>
-
-    <script>
-        // Check for query parameter on page load
-        window.onload = function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const section = urlParams.get('section');
-            const status = urlParams.get('status');
-
-            // Display the correct section based on URL parameter
-            if (section) {
-                displayContent(section);
-            }
-
-            // Show a status message if available
-            if (status === 'success') {
-                document.getElementById('status-message').innerHTML = "<span style='color: green;'>Song added successfully!</span>";
-            } else if (status === 'error') {
-                document.getElementById('status-message').innerHTML = "<span style='color: red;'>Error adding song.</span>";
-            }
-        }
-    </script>
 </body>
 </html>
-
