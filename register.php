@@ -26,7 +26,6 @@
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $username = $_POST['username'];
                 $password = $_POST['password'];
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);  // Hash the password
             
                 $checkUser = $conn->prepare("SELECT * FROM login WHERE username = ?");
                 $checkUser->bind_param("s", $username);
@@ -37,7 +36,7 @@
                     echo "<p style='color: red;'>Username already exists! Please choose another one.</p>";
                 } else {
                     $stmt = $conn->prepare("INSERT INTO login (username, password) VALUES (?, ?)");
-                    $stmt->bind_param("ss", $username, $hashed_password);  // Store the hashed password
+                    $stmt->bind_param("ss", $username, $password);  // Store the hashed password
             
                     if ($stmt->execute()) {
                         echo "<p style='color: green;'>Registration successful! You can now <a href='login.php'>login</a>.</p>";

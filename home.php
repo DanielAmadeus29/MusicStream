@@ -68,16 +68,16 @@ function fetchSongs($conn) {
                     .then(data => {
                         contentDiv.innerHTML = data;
                     });
-            } else if (section === 'InsertSong') {
-                contentDiv.innerHTML = `
-                    <h1>Insert Song</h1>
-                    <form method="post" action="">
-                       <label for="title">Title: <span style="color: red;">Required</span></label>
+                } else if (section === 'InsertSong') {
+                contentDiv.innerHTML =
+                    `<h1>Insert Song</h1>
+                    <form method="post" action="insert_song.php"> <!-- Set action to the PHP file -->
+                    <label for="title">Title: <span style="color: red;">Required</span></label>
                         <input type="text" id="title" name="title" required><br><br>
-        
-                       <label for="title">Artist: <span style="color: red;">Required</span></label>
+
+                    <label for="artist">Artist: <span style="color: red;">Required</span></label>
                         <input type="text" id="artist" name="artist" required><br><br>
-        
+
                         <input type="submit" value="Insert Song">
                     </form>
                 `;
