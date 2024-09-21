@@ -68,9 +68,9 @@ function fetchSongs($conn) {
                     .then(data => {
                         contentDiv.innerHTML = data;
                     });
-            } else if (section === 'AddSong') {
+            } else if (section === 'InsertSong') {
                 contentDiv.innerHTML = `
-                    <h1>Add Song</h1>
+                    <h1>Insert Song</h1>
                     <form method="post" action="">
                        <label for="title">Title: <span style="color: red;">Required</span></label>
                         <input type="text" id="title" name="title" required><br><br>
@@ -92,7 +92,7 @@ function fetchSongs($conn) {
         <a href="#" onclick="displayContent('Home')">Home</a>
         <a href="#" onclick="displayContent('Search')">Search</a>
         <a href="#" onclick="displayContent('Playlist')">Playlist</a>
-        <a href="#" onclick="displayContent('AddSong')">Add Song</a>
+        <a href="#" onclick="displayContent('InsertSong')">Insert Song</a>
     </div>
 
     <div class="content" id="content-display">
