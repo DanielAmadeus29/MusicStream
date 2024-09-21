@@ -1,37 +1,50 @@
 <?php
-// Database connection details
-$servername = "localhost";
-$username = "root";  // Your MySQL username
-$password = "";      // Your MySQL password
-$dbname = "musicstream";  // Your database name
 
-// Create connection
+$servername = "localhost";
+$username = "root";  
+$password = "";      
+$dbname = "musicstream";  
+
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// This block will only run when the form is submitted
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the data from the form
+    
     $title = $_POST['title'];
     $artist = $_POST['artist'];
 
-    // SQL query to insert data into the "song" table
     $sql = "INSERT INTO song (title, artist) VALUES ('$title', '$artist')";
 
-    // Execute the query
     if ($conn->query($sql) === TRUE) {
         echo "<script>alert('New song inserted successfully!');</script>";
     } else {
         echo "<script>alert('Error: " . $sql . "<br>" . $conn->error . "');</script>";
     }
-
-    // Close the connection
-    $conn->close();
 }
+
+function fetchSongs($conn) {
+    $sql = "SELECT title, artist FROM song";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+
+        $output = "<h1>Playlist</h1><ul>";
+        while ($row = $result->fetch_assoc()) {
+            $output .= "<li>" . htmlspecialchars($row["title"]) . " by " . htmlspecialchars($row["artist"]) . "</li>";
+        }
+        $output .= "</ul>";
+    } else {
+        $output = "<h1>Playlist</h1><p>No songs found</p>";
+    }
+    return $output;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -50,9 +63,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else if (section === 'Search') {
                 contentDiv.innerHTML = '<h1>Search</h1>';
             } else if (section === 'Playlist') {
-                contentDiv.innerHTML = '<h1>Playlist</h1>';
-            }
-            else if (section === 'AddSong') {
+                fetch('playlist.php')
+                    .then(response => response.text())
+                    .then(data => {
+                        contentDiv.innerHTML = data;
+                    });
+            } else if (section === 'AddSong') {
                 contentDiv.innerHTML = `
                     <h1>Add Song</h1>
                     <form method="post" action="">
