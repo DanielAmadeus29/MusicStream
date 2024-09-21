@@ -11,60 +11,51 @@
     <div class="login-container">
         <h2>Login</h2>
         <?php
-            session_start();  // Start the session at the top
+    session_start(); 
 
-            // Database connection
-            $servername = "localhost";
-            $usernameDB = "root";  // Update as per your database credentials
-            $passwordDB = "";
-            $dbname = "musicstream";
+    $servername = "localhost";
+    $usernameDB = "root"; 
+    $passwordDB = "";
+    $dbname = "musicstream";
 
-            // Create a new connection
-            $conn = new mysqli($servername, $usernameDB, $passwordDB, $dbname);
+    $conn = new mysqli($servername, $usernameDB, $passwordDB, $dbname);
 
-            // Check if the connection works
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+
+        $sql = "SELECT user_id, username FROM login WHERE username = ? AND password = ?";
+        $stmt = $conn->prepare($sql);
+
+        if ($stmt) {
+
+            $stmt->bind_param("ss", $username, $password);  
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $user = $result->fetch_assoc(); 
+
+                $_SESSION['user_id'] = $user['user_id']; 
+                $_SESSION['username'] = $user['username']; 
+
+                header("Location: home.php");
+                exit();  
+            } else {
+                echo "<p style='color: red;'>Invalid username or password. Please try again.</p>";
             }
 
-            // Check if the form is submitted
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-
-                // Prepare the SQL query
-                $sql = "SELECT * FROM login WHERE username = ? AND password = ?";
-                $stmt = $conn->prepare($sql);
-
-                if ($stmt) {
-                    $stmt->bind_param("ss", $username, $password);  // Bind parameters
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                
-                    // If the user exists, log them in
-                    if ($result->num_rows > 0) {
-                        // Fetch the user data (assuming user_id is a column in your database)
-                        $row = $result->fetch_assoc();
-                        $user_id = $row['user_id'];  // Get the user ID from the result
-                        
-                        $_SESSION['user_id'] = $user_id;  // Store user ID in session
-                        header("Location: home.php");  // Redirect to the home page
-                        exit();  // Stop further execution after redirect
-                    } else {
-                        echo "<p style='color: red;'>Invalid username or password. Please try again.</p>";
-                    }
-                
-                    // Close the statement
-                    $stmt->close();
-                } else {
-                    echo "<p style='color: red;'>Error preparing the statement.</p>";
-                }
-            }
-            // Close the connection
-            $conn->close();
-        ?>
-
-        <!-- Login form -->
+            $stmt->close();
+        } else {
+            echo "<p style='color: red;'>Error preparing the statement.</p>";
+        }
+    }
+    $conn->close();
+?>
         <form action="login.php" method="post">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>

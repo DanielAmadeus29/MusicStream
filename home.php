@@ -87,11 +87,10 @@ function fetchSongs($conn) {
         }
         window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
-            const section = urlParams.get('section');
             displayContent('Home');
         }
-    </script>
     
+    </script>
 </head>
 <body>
     <div class="navbar">
@@ -100,11 +99,14 @@ function fetchSongs($conn) {
         <a href="#" onclick="displayContent('Search')">Search</a>
         <a href="#" onclick="displayContent('Playlist')">Playlist</a>
         <a href="#" onclick="displayContent('InsertSong')">Insert Song</a>
+        <?php if (isset($_SESSION['username'])): ?>
+        <form action="logout.php" method="post" style="display: inline;">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    <?php endif; ?>
     </div>
-
     <div class="content" id="content-display">
-        <h1>Welcome</h1>
-        <p>Please select a section from the menu.</p>
+        <h1>Welcome <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest'; ?>!</h1>
     </div>
 </body>
 </html>

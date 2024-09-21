@@ -32,9 +32,10 @@ CREATE TABLE song (
     artist VARCHAR(255) NOT NULL,
     user_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES login(user_id)
+
 );
 
-
+ ALTER TABLE song ADD COLUMN file_path VARCHAR(255);
 --
 -- Dumping data for table `login`
 --

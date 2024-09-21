@@ -12,7 +12,7 @@
         <h2>Register</h2>
         <?php
             session_start();
-            
+
             $servername = "localhost";
             $usernameDB = "root";
             $passwordDB = "";
@@ -37,7 +37,7 @@
                     echo "<p style='color: red;'>Username already exists! Please choose another one.</p>";
                 } else {
                     $stmt = $conn->prepare("INSERT INTO login (username, password) VALUES (?, ?)");
-                    $stmt->bind_param("ss", $username, $password);  // Store the hashed password
+                    $stmt->bind_param("ss", $username, $password); 
             
                     if ($stmt->execute()) {
                         echo "<p style='color: green;'>Registration successful! You can now <a href='login.php'>login</a>.</p>";
