@@ -11,7 +11,8 @@
     <div class="login-container">
         <h2>Register</h2>
         <?php
-
+            session_start();
+            
             $servername = "localhost";
             $usernameDB = "root";
             $passwordDB = "";

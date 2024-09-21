@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+    echo "User ID: " . $_SESSION['user_id'];
+} else {
+    echo "User ID is not set in the session.";
+}
+
 
 $servername = "localhost";
 $username = "root";  
@@ -71,7 +79,7 @@ function fetchSongs($conn) {
                 } else if (section === 'InsertSong') {
                 contentDiv.innerHTML =
                     `<h1>Insert Song</h1>
-                    <form method="post" action="insert_song.php"> <!-- Set action to the PHP file -->
+                    <form method="post" action="insertsong.php"> <!-- Set action to the PHP file -->
                     <label for="title">Title: <span style="color: red;">Required</span></label>
                         <input type="text" id="title" name="title" required><br><br>
 
