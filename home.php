@@ -72,10 +72,10 @@ function fetchSongs($conn) {
                 contentDiv.innerHTML = `
                     <h1>Add Song</h1>
                     <form method="post" action="">
-                        <label for="title">Title:</label>
+                       <label for="title">Title: <span style="color: red;">Required</span></label>
                         <input type="text" id="title" name="title" required><br><br>
         
-                        <label for="artist">Artist:</label>
+                       <label for="title">Artist: <span style="color: red;">Required</span></label>
                         <input type="text" id="artist" name="artist" required><br><br>
         
                         <input type="submit" value="Insert Song">
