@@ -17,6 +17,9 @@
             } else if (section === 'Playlist') {
                 contentDiv.innerHTML = '<h1>Playlist</p>';
             }
+            else if (section === 'AddSong') {
+                contentDiv.innerHTML = '<h1>Add Song</p>';
+            }
         }
     </script>
 </head>
@@ -27,6 +30,7 @@
         <a href="#" onclick="displayContent('Home')">Home</a>
         <a href="#" onclick="displayContent('Search')">Search</a>
         <a href="#" onclick="displayContent('Playlist')">Playlist</a>
+        <a href="#" onclick="displayContent('AddSong')">Add Song</a>
     </div>
 
     <div class="content" id="content-display">
