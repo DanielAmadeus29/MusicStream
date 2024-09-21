@@ -15,7 +15,7 @@
             $servername = "localhost";
             $usernameDB = "root";
             $passwordDB = "";
-            $dbname = "musicuser";
+            $dbname = "musicstream";
 
             $conn = new mysqli($servername, $usernameDB, $passwordDB, $dbname);
 
