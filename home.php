@@ -80,6 +80,9 @@ function fetchSongs($conn) {
                         <label for="artist">Artist: <span style="color: red;">Required</span></label>
                         <input type="text" id="artist" name="artist" required><br><br>
 
+                        <label for="file">Upload MP3:</label>
+                        <input type="file" name="file" accept=".mp3" required>
+                        
                         <input type="submit" value="Insert Song">
                     </form>
                     <p id="status-message"></p>`;

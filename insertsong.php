@@ -20,8 +20,8 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = $_POST['title'];
     $artist = $_POST['artist'];
+    
     $user_id = $_SESSION['user_id'];
-
     $stmt = $conn->prepare("INSERT INTO song (title, artist, user_id) VALUES (?, ?, ?)");
     $stmt->bind_param("ssi", $title, $artist, $user_id);
 
@@ -32,6 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
+
+
     $stmt->close();
     $conn->close();
 }
