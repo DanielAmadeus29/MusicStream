@@ -31,10 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("ssi", $title, $artist, $user_id);
 
     if ($stmt->execute()) {
-        echo "Song added successfully!";
+        // Redirect to the home page with the InsertSong section and success message
+        header("Location: home.php?section=InsertSong&status=success");
+        exit();
     } else {
-        echo "Error adding song: " . $stmt->error;
+        // Redirect to the home page with the InsertSong section and error message
+        header("Location: home.php?section=InsertSong&status=error");
+        exit();
     }
+    
 
     // Close statement and connection
     $stmt->close();

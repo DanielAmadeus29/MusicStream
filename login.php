@@ -40,23 +40,26 @@
                     $stmt->bind_param("ss", $username, $password);  // Bind parameters
                     $stmt->execute();
                     $result = $stmt->get_result();
-
+                
                     // If the user exists, log them in
                     if ($result->num_rows > 0) {
-                        $_SESSION['username'] = $username;  // Store username in session
+                        // Fetch the user data (assuming user_id is a column in your database)
+                        $row = $result->fetch_assoc();
+                        $user_id = $row['user_id'];  // Get the user ID from the result
+                        
+                        $_SESSION['user_id'] = $user_id;  // Store user ID in session
                         header("Location: home.php");  // Redirect to the home page
                         exit();  // Stop further execution after redirect
                     } else {
                         echo "<p style='color: red;'>Invalid username or password. Please try again.</p>";
                     }
-
+                
                     // Close the statement
                     $stmt->close();
                 } else {
                     echo "<p style='color: red;'>Error preparing the statement.</p>";
                 }
             }
-
             // Close the connection
             $conn->close();
         ?>

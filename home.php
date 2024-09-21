@@ -76,25 +76,24 @@ function fetchSongs($conn) {
                     .then(data => {
                         contentDiv.innerHTML = data;
                     });
-                } else if (section === 'InsertSong') {
+            } else if (section === 'InsertSong') {
                 contentDiv.innerHTML =
                     `<h1>Insert Song</h1>
-                    <form method="post" action="insertsong.php"> <!-- Set action to the PHP file -->
-                    <label for="title">Title: <span style="color: red;">Required</span></label>
+                    <form method="post" action="insertsong.php">
+                        <label for="title">Title: <span style="color: red;">Required</span></label>
                         <input type="text" id="title" name="title" required><br><br>
 
-                    <label for="artist">Artist: <span style="color: red;">Required</span></label>
+                        <label for="artist">Artist: <span style="color: red;">Required</span></label>
                         <input type="text" id="artist" name="artist" required><br><br>
 
                         <input type="submit" value="Insert Song">
                     </form>
-                `;
+                    <p id="status-message"></p>`;
             }
         }
     </script>
 </head>
 <body>
-
     <div class="navbar">
         <p><h2>Music Streaming</h2></p>
         <a href="#" onclick="displayContent('Home')">Home</a>
@@ -108,5 +107,26 @@ function fetchSongs($conn) {
         <p>Please select a section from the menu.</p>
     </div>
 
+    <script>
+        // Check for query parameter on page load
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const section = urlParams.get('section');
+            const status = urlParams.get('status');
+
+            // Display the correct section based on URL parameter
+            if (section) {
+                displayContent(section);
+            }
+
+            // Show a status message if available
+            if (status === 'success') {
+                document.getElementById('status-message').innerHTML = "<span style='color: green;'>Song added successfully!</span>";
+            } else if (status === 'error') {
+                document.getElementById('status-message').innerHTML = "<span style='color: red;'>Error adding song.</span>";
+            }
+        }
+    </script>
 </body>
 </html>
+
